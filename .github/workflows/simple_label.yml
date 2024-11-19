@@ -1,0 +1,73 @@
+
+name: Simple label
+on:
+  issues:
+    types:
+      - opened
+      - reopened
+      - closed
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - closed
+jobs:
+  simple_label:
+    permissions:
+      issues: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      # プルリクエスがオープン時にラベルを貼る
+      - name: Add Label pull_request
+        if: >
+          contains(github.event_name, 'pull_request')
+          && (contains(github.event.action, 'opened') || contains(github.event.action, 'reopened'))
+        run: gh pr edit "$NUMBER" --add-label "$LABELS"
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.number }}
+          LABELS: "Status: Available"
+
+      # イシューがオープン時にラベルを貼る
+      - name: Add Label issue
+        if: >
+          contains(github.event_name, 'issues')
+          && (contains(github.event.action, 'opened') || contains(github.event.action, 'reopened'))
+        run: gh issue edit "$NUMBER" --add-label "$LABELS"
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.issue.number }}
+          LABELS: "Status: Available"
+
+      # プルリクエスがクローズ時にラベルを貼る
+      - name: Remove Label pull_request
+        if: >
+          contains(github.event_name, 'pull_request')
+          && contains(github.event.action, 'closed')
+        run: >
+          gh pr edit "$NUMBER" --remove-label "$RM_LABELS"
+          && gh pr edit "$NUMBER" --add-label "$AD_LABELS"
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.number }}
+          RM_LABELS: "Status: Available,Status: In Progress,Status: Inavtive,Status: Pending"
+          AD_LABELS: "Status: Completed"
+
+      # イシューがクローズ時にラベルを貼る
+      - name: Remove Label issue
+        if: >
+          contains(github.event_name, 'issues')
+          && contains(github.event.action, 'closed')
+        run: >
+          gh issue edit "$NUMBER" --remove-label "$RM_LABELS"
+          && gh issue edit "$NUMBER" --add-label "$AD_LABELS"
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.issue.number }}
+          RM_LABELS: "Status: Available,Status: In Progress,Status: Inavtive,Status: Pending"
+          AD_LABELS: "Status: Completed"
