@@ -1,0 +1,61 @@
+[tool.poetry]
+name = "elin-not-random-quest"
+version = "0.1.0"
+description = ""
+authors = ["Hiroshi Miura <hirmiura@gmail.com>"]
+readme = "README.md"
+packages = [{include = "elin_not_random_quest", from = "src"}]
+
+
+[tool.poetry.dependencies]
+python    = "^3.12"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.13.0"
+
+
+[build-system]
+requires      = [ "poetry-core" ]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.mypy]
+ignore_missing_imports = true
+no_implicit_optional   = true
+warn_redundant_casts   = true
+warn_unused_ignores    = false
+plugins                = [ "pydantic.mypy", "numpy.typing.mypy_plugin" ]
+
+
+[tool.ruff]
+include        = [ "pyproject.toml", "src/**/*.py" ]
+exclude        = [ "**/node_modules", "**/__pycache__", "**/.*", "**/*.pyi" ]
+line-length    = 100
+target-version = "py312"
+
+
+[tool.ruff.lint]
+select = [ "E", "F", "W", "C", "I", "N", "D", "UP", "G", "Q" ]
+ignore = [ "D1", "D400", "D415" ]
+
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = [ "E402" ]
+
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+
+[tool.pyright]
+include        = [ "src" ]
+exclude        = [ "**/node_modules", "**/__pycache__", "**/.*", "**/*.pyi" ]
+pythonVersion  = "3.12"
+pythonPlatform = "Linux"
+
+
+[tool.pytest.ini_options]
+addopts    = [ "--import-mode=importlib" ]
+pythonpath = [ "src" ]
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Meta>
+    <title>Not Random Quest</title>
+    <id>not_random_quest</id>
+    <author>Yararezon</author>
+    <loadPriority>100</loadPriority>
+    <version>0.23.29-0.1.0</version>
+    <description>[h1]Not Random Quest[/h1]
+
+        ランダムクエストで特定のクエストだけが出るようにするコンソールコマンドを追加します。
+
+        [h2]コマンド[/h2]
+
+        [h3]NRQSet id[/h3]
+        id のクエストだけにします。
+        id は Source Extractor の quests.csv を見るなどしてください。
+
+        [h3]NRQReset[/h3]
+        リセットして元の状態に戻します。
+
+        [h2]既存のセーブゲームへの追加[/h2]
+
+        問題ありません。
+
+        [h2]既存のセーブゲームからの削除[/h2]
+
+        問題ありません。
+
+        [h2]ソース[/h2]
+
+        https://github.com/hirmiura/elin-not_random_quest
+
+        [h2]変更履歴[/h2]
+
+        [list]
+        [*] 0.1.0
+        初版
+        [/list]</description>
+</Meta>
