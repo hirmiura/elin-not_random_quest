@@ -639,7 +639,7 @@ FodyWeavers.xsd
 ####################
 # Elin/Packageディレクトリにスパースチェックアウト
 # cd Elin/Package
-# git inti
+# git init
 # git config core.sparsecheckout true
 # git remote add origin git@github.com:hirmiura/elin-not_random_quest.git
 # echo "Not_Random_Quest" > .git/info/sparse-checkout
