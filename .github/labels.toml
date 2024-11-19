@@ -1,24 +1,114 @@
-["good first issue"]
-color = "7057ff"
-name = "good first issue"
+["0: good first issue"]
+color = "cdff78"
+name = "0: good first issue"
 description = "Good for newcomers"
 
-["help wanted"]
-color = "008672"
-name = "help wanted"
+["0: help wanted"]
+color = "ffa948"
+name = "0: help wanted"
 description = "Extra attention is needed"
 
-[invalid]
-color = "e4e669"
-name = "invalid"
+["Close: Duplicate"]
+color = "dddddd"
+name = "Close: Duplicate"
+description = "This issue or pull request already exists"
+
+["Close: Invalid"]
+color = "dddddd"
+name = "Close: Invalid"
 description = "This doesn't seem right"
 
-[question]
-color = "d876e3"
-name = "question"
+["Close: Wontfix"]
+color = "dddddd"
+name = "Close: Wontfix"
+description = "This will not be worked on"
+
+["Feedback: Discussion"]
+color = "952d0e"
+name = "Feedback: Discussion"
+description = "A discussion about features"
+
+["Feedback: Question"]
+color = "952d0e"
+name = "Feedback: Question"
 description = "Further information is requested"
 
-[wontfix]
-color = "ffffff"
-name = "wontfix"
-description = "This will not be worked on"
+["Feedback: Suggestion"]
+color = "952d0e"
+name = "Feedback: Suggestion"
+description = "A suggestion about features"
+
+["Priority: High"]
+color = "ffb74d"
+name = "Priority: High"
+description = "We must work on it"
+
+["Priority: Low"]
+color = "dce775"
+name = "Priority: Low"
+description = "We should work on it"
+
+["Priority: Medium"]
+color = "fff177"
+name = "Priority: Medium"
+description = "We need work on it"
+
+["Status: Available"]
+color = "81c785"
+name = "Status: Available"
+description = "Waiting for working on it"
+
+["Status: Canceled"]
+color = "e57373"
+name = "Status: Canceled"
+description = "Working on it, but canceled"
+
+["Status: Completed"]
+color = "4db6ac"
+name = "Status: Completed"
+description = "Worked on it and completed"
+
+["Status: In Progress"]
+color = "64b5f7"
+name = "Status: In Progress"
+description = "Currently working on it"
+
+["Status: Inavtive"]
+color = "90a4af"
+name = "Status: Inavtive"
+description = "For now, there is no plan to work on it"
+
+["Status: Pending"]
+color = "a2887f"
+name = "Status: Pending"
+description = "Worked on it, but suspended"
+
+["Type: Bug"]
+color = "ff8a65"
+name = "Type: Bug"
+description = "Something isn't working"
+
+["Type: Documentation"]
+color = "81c785"
+name = "Type: Documentation"
+description = "Improvements or additions to documentation"
+
+["Type: Enhancement / New feature"]
+color = "64b5f7"
+name = "Type: Enhancement / New feature"
+description = "New feature or request"
+
+["Type: Improvement"]
+color = "4db6ac"
+name = "Type: Improvement"
+description = "Improve features which are working"
+
+["Type: Modification"]
+color = "4dd0e1"
+name = "Type: Modification"
+description = "Just modify features"
+
+["Type: Optimization"]
+color = "ba68c8"
+name = "Type: Optimization"
+description = "Optimize existing features"
