@@ -41,6 +41,10 @@ public static class Console
             Backup();
             s_hasReset = false;
         }
+        else
+        {
+            NRQReset();
+        }
         current.Where(pair => pair.Key != id && pair.Value.group == "random")
             .Select(pair => pair.Key).ToList()
             .ForEach(key => current[key].group = "dummy");
