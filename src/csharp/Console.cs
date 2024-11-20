@@ -19,6 +19,7 @@ public static class Console
     {
         if (s_hasReset)
         {
+            Plugin.Logger.LogDebug("NRQReset: Did nothing.");
             return "Did nothing because of don't need recovery.";
         }
         else
@@ -26,6 +27,7 @@ public static class Console
             var current = EClass.sources.quests.map;
             s_backup.ToList().ForEach(pair => current[pair.Key].group = pair.Value);
             s_hasReset = true;
+            Plugin.Logger.LogDebug($"NRQReset: Resore default.");
             return "Restore default.";
         }
     }
@@ -34,8 +36,11 @@ public static class Console
     public static string NRQSet(string id)
     {
         var current = EClass.sources.quests.map;
-        if (!current.ContainsKey(id)) return $"{id} not Found.";
-
+        if (!current.ContainsKey(id))
+        {
+            Plugin.Logger.LogDebug($"NRQSet: {id} not Found.");
+            return $"{id} not Found.";
+        }
         if (s_hasReset)
         {
             Backup();
@@ -48,6 +53,7 @@ public static class Console
         current.Where(pair => pair.Key != id && pair.Value.group == "random")
             .Select(pair => pair.Key).ToList()
             .ForEach(key => current[key].group = "dummy");
+        Plugin.Logger.LogDebug($"NRQSet: {id} set.");
         return $"Only quest: {id}";
     }
 
@@ -58,5 +64,6 @@ public static class Console
             .Where(pair => pair.Value.group == "random")
             .ToDictionary(pair => pair.Key, pair => pair.Value.group)
             .DeepCopy();
+        Plugin.Logger.LogDebug($"Backup: Save values.");
     }
 }
