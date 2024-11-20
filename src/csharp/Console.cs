@@ -53,6 +53,7 @@ public static class Console
         current.Where(pair => pair.Key != id && pair.Value.group == "random")
             .Select(pair => pair.Key).ToList()
             .ForEach(key => current[key].group = "dummy");
+        Plugin.ConfigId.Value = id;
         Plugin.Logger.LogDebug($"NRQSet: {id} set.");
         return $"Only quest: {id}";
     }
