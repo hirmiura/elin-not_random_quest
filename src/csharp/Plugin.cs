@@ -47,7 +47,11 @@ public static class GamePatch
     public static void Postfix()
     {
         var id = Plugin.ConfigId.Value;
-        if (id.IsNullOrWhiteSpace()) return;
+        if (id.IsNullOrWhiteSpace())
+        {
+            Plugin.Logger.LogDebug($"GamePatch.Postfix: id not set.");
+            return;
+        }
         Console.HasReset = true;  // ロード後はリセットフラグを立てる
         Console.NRQSet(id);  // 再設定
     }
