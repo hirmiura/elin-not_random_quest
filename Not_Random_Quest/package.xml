@@ -4,7 +4,7 @@
     <id>not_random_quest</id>
     <author>Yararezon</author>
     <loadPriority>100</loadPriority>
-    <version>0.23.29-0.1.1</version>
+    <version>0.23.34-0.1.2</version>
     <description>[h1]Not Random Quest[/h1]
 
         ランダムクエストで特定のクエストだけが出るようにするコンソールコマンドを追加します。
