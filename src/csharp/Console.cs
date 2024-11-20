@@ -45,17 +45,19 @@ public static class Console
         if (HasReset)
         {
             Backup();
-            HasReset = false;
         }
         else
         {
             NRQReset();
         }
+        HasReset = false;
         current.Where(pair => pair.Key != id && pair.Value.group == "random")
             .Select(pair => pair.Key).ToList()
             .ForEach(key => current[key].group = "dummy");
         Plugin.ConfigId.Value = id;
         Plugin.Logger.LogDebug($"NRQSet: {id} set.");
+        // var dummies = string.Join(", ", current.Where(pair => pair.Value.group == "dummy").Select(pair => pair.Key));
+        // Plugin.Logger.LogDebug($"dummy: {dummies}");
         return $"Only quest: {id}";
     }
 
@@ -66,6 +68,8 @@ public static class Console
             .Where(pair => pair.Value.group == "random")
             .ToDictionary(pair => pair.Key, pair => pair.Value.group)
             .DeepCopy();
+        // var backuped = string.Join(", ", s_backup.Select(pair => pair.Key));
+        // Plugin.Logger.LogDebug($"backuped: {backuped}");
         Plugin.Logger.LogDebug($"Backup: Save values.");
     }
 }
