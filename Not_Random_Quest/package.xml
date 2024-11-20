@@ -11,12 +11,23 @@
 
         [h2]コマンド[/h2]
 
-        [h3]NRQSet id[/h3]
-        id のクエストだけにします。
-        id は Source Extractor の quests.csv を見るなどしてください。
+        [list]
+        [*] [code]NRQSet [u]id[/u][/code]
+        [u]id[/u] のクエストだけにします。
+        [u]id[/u] は Source Extractor の quests.csv を見るなどしてください。
+        例: [code]NRQSet [u]escort[/u][/code]
 
-        [h3]NRQReset[/h3]
+        [*] [code]NRQReset[/code]
         リセットして元の状態に戻します。
+
+        [*] [code]NRQDest [u]destination[/u][/code]
+        エスコートクエストの行き先を [u]destination[/u] に固定します。
+        NRQSet の [u]id[/u] が escort, escort2, escort3 のものです。
+        例: [code]NRQDest [u]パルミア大使館[/u][/code]
+
+        [*] [code]NRQDestReset[/code]
+        行き先の固定を解除します。
+        [/list]
 
         [h2]既存のセーブゲームへの追加[/h2]
 
@@ -27,7 +38,11 @@
         問題ありません。
 
         [h2]設定ファイル[/h2]
-        BepInEx/config/yararezon.not_random_quest.cfg に設定した id を保存します。
+        BepInEx/config/yararezon.not_random_quest.cfg に設定を保存します。
+
+        [h2]メモ[/h2]
+
+        行き先の固定が deliver に対応していないのは、配達先のキャラクターまで調べられていないからです。
 
         [h2]ソース[/h2]
 
@@ -36,6 +51,8 @@
         [h2]変更履歴[/h2]
 
         [list]
+        [*] 0.1.3
+        エスコートクエストの行き先を固定するコマンドを追加した
         [*] 0.1.2
         ランダムクエストが生成されない事があるバグを修正した
         [*] 0.1.1
