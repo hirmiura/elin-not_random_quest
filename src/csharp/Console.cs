@@ -72,4 +72,33 @@ public static class Console
         // Plugin.Logger.LogDebug($"backuped: {backuped}");
         Plugin.Logger.LogDebug($"Backup: Save values.");
     }
+
+    [ConsoleCommand("")]
+    public static string NRQDest(string destination)
+    {
+        var zones = EClass.game.spatials.Zones;
+        var dstZone = zones.Where(z => z.Name == destination).FirstOrDefault();
+        if (dstZone is null)
+        {
+            var msg = $"{destination} not found.";
+            Plugin.Logger.LogDebug($"NRQDest: {msg}");
+            return msg;
+        }
+        QuestDestZonePatch.PatchingZone = dstZone;  // パッチャーにゾーンを教える
+        Plugin.ConfigDestZone.Value = destination;  // 設定を保存
+
+        var message = $"Destination lock only for escort quests: \"{destination}\", uid:{dstZone.uid}";
+        Plugin.Logger.LogDebug($"NRQDest: {message}");
+        return message;
+    }
+
+    [ConsoleCommand("")]
+    public static string NRQDestReset()
+    {
+        QuestDestZonePatch.PatchingZone = null;  // パッチャーにnullセット
+        Plugin.ConfigDestZone.Value = "";  // 設定を保存
+        var message = "Clear destination lock.";
+        Plugin.Logger.LogDebug($"NRQDestReset: {message}");
+        return message;
+    }
 }
