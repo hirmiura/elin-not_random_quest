@@ -12,7 +12,7 @@ public static class MyPluginInfo
 {
     public const string PLUGIN_GUID = "yararezon.not_random_quest";
     public const string PLUGIN_NAME = "Not Random Quest";
-    public const string PLUGIN_VERSION = "0.1.2";
+    public const string PLUGIN_VERSION = "0.1.3";
 }
 
 
@@ -22,6 +22,7 @@ public class Plugin : BaseUnityPlugin
 {
     internal static new ManualLogSource Logger;
     public static ConfigEntry<string> ConfigId;
+    public static ConfigEntry<string> ConfigDestZone;
 
     private void Awake()
     {
@@ -34,6 +35,11 @@ public class Plugin : BaseUnityPlugin
             "id",  // Key
             "", // Default value
             "The target quest id, blank means not set."); // Description of the option to show in the config file
+        ConfigDestZone = Config.Bind(
+            "General",  // Section
+            "destZone",  // Key
+            "", // Default value
+            "The destination zone name, blank means not set."); // Description of the option to show in the config file
         // ハーモニーパッチ
         var harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
         harmony.PatchAll();
@@ -46,13 +52,43 @@ public static class GamePatch
 {
     public static void Postfix()
     {
+        // id の設定
         var id = Plugin.ConfigId.Value;
         if (id.IsNullOrWhiteSpace())
         {
             Plugin.Logger.LogDebug($"GamePatch.Postfix: id not set.");
-            return;
         }
-        Console.HasReset = true;  // ロード後はリセットフラグを立てる
-        Console.NRQSet(id);  // 再設定
+        else
+        {
+            Console.HasReset = true;  // ロード後はリセットフラグを立てる
+            Console.NRQSet(id);  // 再設定
+        }
+
+        // destZone の設定
+        var destination = Plugin.ConfigDestZone.Value;
+        if (id.IsNullOrWhiteSpace())
+        {
+            Plugin.Logger.LogDebug($"GamePatch.Postfix: destZone not set.");
+        }
+        else
+        {
+            Console.NRQDest(destination);
+        }
+    }
+}
+[HarmonyPatch(typeof(QuestDestZone), nameof(QuestDestZone.SetDest))]
+public static class QuestDestZonePatch
+{
+    public static Zone PatchingZone = null;
+#pragma warning disable IDE1006 // 命名スタイル
+    public static void Prefix(QuestDestZone __instance, ref Zone z)
+#pragma warning restore IDE1006 // 命名スタイル
+    {
+        if (PatchingZone is not null
+            && typeof(QuestEscort).IsInstanceOfType(__instance))
+        {
+            z = PatchingZone;
+            Plugin.Logger.LogDebug($"QuestDestZone.SetDest.Prefix: Zone \"{z.Name}\"");
+        }
     }
 }
