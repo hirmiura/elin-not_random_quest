@@ -26,6 +26,7 @@ public static class Console
         {
             var current = EClass.sources.quests.map;
             s_backup.ToList().ForEach(pair => current[pair.Key].group = pair.Value);
+            Plugin.ConfigId.Value = "";
             HasReset = true;
             Plugin.Logger.LogDebug($"NRQReset: Resore default.");
             return "Restore default.";
