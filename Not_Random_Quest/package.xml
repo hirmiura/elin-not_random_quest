@@ -15,7 +15,7 @@
         [*] [code]NRQSet [u]id[/u][/code]
         [u]id[/u] のクエストだけにします。
         [u]id[/u] は Source Extractor の quests.csv を見るなどしてください。
-        例: [code]NRQSet [u]escort[/u][/code]
+        例: NRQSet [u]escort[/u]
 
         [*] [code]NRQReset[/code]
         リセットして元の状態に戻します。
@@ -23,7 +23,7 @@
         [*] [code]NRQDest [u]destination[/u][/code]
         エスコートクエストの行き先を [u]destination[/u] に固定します。
         NRQSet の [u]id[/u] が escort, escort2, escort3 のものです。
-        例: [code]NRQDest [u]パルミア大使館[/u][/code]
+        例: NRQDest [u]パルミア大使館[/u]
 
         [*] [code]NRQDestReset[/code]
         行き先の固定を解除します。
