@@ -34,6 +34,9 @@ public class Plugin : BaseUnityPlugin
             "id",  // Key
             "", // Default value
             "The target quest id, blank means not set."); // Description of the option to show in the config file
+        // ハーモニーパッチ
+        var harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
+        harmony.PatchAll();
         // コマンドの登録
         CommandRegistry.assemblies.Add(executingAssembly);
     }
