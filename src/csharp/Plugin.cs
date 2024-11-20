@@ -2,7 +2,9 @@
 // Copyright 2024 hirmiura (https://github.com/hirmiura)
 using System.Reflection;
 using BepInEx;
+using BepInEx.Configuration;
 using BepInEx.Logging;
+using HarmonyLib;
 using ReflexCLI;
 
 namespace NotRandomQuest;
@@ -19,13 +21,31 @@ public static class MyPluginInfo
 public class Plugin : BaseUnityPlugin
 {
     internal static new ManualLogSource Logger;
+    public static ConfigEntry<string> ConfigId;
 
     private void Awake()
     {
         Logger = base.Logger;
 
         var executingAssembly = Assembly.GetExecutingAssembly();
+        // 設定
+        ConfigId = Config.Bind(
+            "General",  // Section
+            "id",  // Key
+            "", // Default value
+            "The target quest id, blank means not set."); // Description of the option to show in the config file
         // コマンドの登録
         CommandRegistry.assemblies.Add(executingAssembly);
+    }
+}
+[HarmonyPatch(typeof(Game), nameof(Game.OnLoad))]
+public static class GamePatch
+{
+    public static void Postfix()
+    {
+        var id = Plugin.ConfigId.Value;
+        if (id.IsNullOrWhiteSpace()) return;
+        Console.HasReset = true;  // ロード後はリセットフラグを立てる
+        Console.NRQSet(id);  // 再設定
     }
 }

@@ -9,7 +9,7 @@ namespace NotRandomQuest;
 [ConsoleCommandClassCustomizer("")]
 public static class Console
 {
-    private static bool s_hasReset = true;
+    public static bool HasReset = true;
 
     // id, group
     private static Dictionary<string, string> s_backup = [];
@@ -17,7 +17,7 @@ public static class Console
     [ConsoleCommand("")]
     public static string NRQReset()
     {
-        if (s_hasReset)
+        if (HasReset)
         {
             Plugin.Logger.LogDebug("NRQReset: Did nothing.");
             return "Did nothing because of don't need recovery.";
@@ -26,7 +26,7 @@ public static class Console
         {
             var current = EClass.sources.quests.map;
             s_backup.ToList().ForEach(pair => current[pair.Key].group = pair.Value);
-            s_hasReset = true;
+            HasReset = true;
             Plugin.Logger.LogDebug($"NRQReset: Resore default.");
             return "Restore default.";
         }
@@ -41,10 +41,10 @@ public static class Console
             Plugin.Logger.LogDebug($"NRQSet: {id} not Found.");
             return $"{id} not Found.";
         }
-        if (s_hasReset)
+        if (HasReset)
         {
             Backup();
-            s_hasReset = false;
+            HasReset = false;
         }
         else
         {
