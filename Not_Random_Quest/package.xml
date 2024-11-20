@@ -4,7 +4,7 @@
     <id>not_random_quest</id>
     <author>Yararezon</author>
     <loadPriority>100</loadPriority>
-    <version>0.23.29-0.1.0</version>
+    <version>0.23.29-0.1.1</version>
     <description>[h1]Not Random Quest[/h1]
 
         ランダムクエストで特定のクエストだけが出るようにするコンソールコマンドを追加します。
@@ -26,6 +26,9 @@
 
         問題ありません。
 
+        [h2]設定ファイル[/h2]
+        BepInEx/config/yararezon.not_random_quest.cfg に設定した id を保存します。
+
         [h2]ソース[/h2]
 
         https://github.com/hirmiura/elin-not_random_quest
@@ -33,6 +36,8 @@
         [h2]変更履歴[/h2]
 
         [list]
+        [*] 0.1.1
+        設定ファイルに保存するようにした
         [*] 0.1.0
         初版
         [/list]</description>
