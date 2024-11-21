@@ -36,8 +36,10 @@ public static class Console
     [ConsoleCommand("")]
     public static string NRQSet(string id)
     {
-        var current = EClass.sources.quests.map;
-        if (!current.ContainsKey(id))
+        var quest_source = EClass.sources.quests.map
+            .Where(pair => pair.Value.group == "random" || pair.Value.group == "dummy")
+            .ToDictionary(p => p.Key, p => p.Value);
+        if (!quest_source.ContainsKey(id))
         {
             Plugin.Logger.LogDebug($"NRQSet: {id} not Found.");
             return $"{id} not Found.";
@@ -51,12 +53,12 @@ public static class Console
             NRQReset();
         }
         HasReset = false;
-        current.Where(pair => pair.Key != id && pair.Value.group == "random")
+        quest_source.Where(pair => pair.Key != id && pair.Value.group == "random")
             .Select(pair => pair.Key).ToList()
-            .ForEach(key => current[key].group = "dummy");
+            .ForEach(key => quest_source[key].group = "dummy");
         Plugin.ConfigId.Value = id;
         Plugin.Logger.LogDebug($"NRQSet: {id} set.");
-        // var dummies = string.Join(", ", current.Where(pair => pair.Value.group == "dummy").Select(pair => pair.Key));
+        // var dummies = string.Join(", ", quest_source.Where(pair => pair.Value.group == "dummy").Select(pair => pair.Key));
         // Plugin.Logger.LogDebug($"dummy: {dummies}");
         return $"Only quest: {id}";
     }
