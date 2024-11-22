@@ -11,6 +11,9 @@ public static class Console
 {
     public static bool HasReset = true;
 
+    public static readonly string GrpRandom = "random";
+    public static readonly string GrpDummy = "dummy";
+
     // id, group
     private static Dictionary<string, string> s_backup = [];
 
@@ -37,7 +40,7 @@ public static class Console
     public static string NRQSet(string id)
     {
         var quest_source = EClass.sources.quests.map
-            .Where(pair => pair.Value.group == "random" || pair.Value.group == "dummy")
+            .Where(pair => pair.Value.group == GrpRandom || pair.Value.group == GrpDummy)
             .ToDictionary(p => p.Key, p => p.Value);
         if (!quest_source.ContainsKey(id))
         {
@@ -53,12 +56,12 @@ public static class Console
             NRQReset();
         }
         HasReset = false;
-        quest_source.Where(pair => pair.Key != id && pair.Value.group == "random")
+        quest_source.Where(pair => pair.Key != id && pair.Value.group == GrpRandom)
             .Select(pair => pair.Key).ToList()
-            .ForEach(key => quest_source[key].group = "dummy");
+            .ForEach(key => quest_source[key].group = GrpDummy);
         Plugin.ConfigId.Value = id;
         Plugin.Logger.LogDebug($"NRQSet: {id} set.");
-        // var dummies = string.Join(", ", quest_source.Where(pair => pair.Value.group == "dummy").Select(pair => pair.Key));
+        // var dummies = string.Join(", ", quest_source.Where(pair => pair.Value.group == GrpDummy).Select(pair => pair.Key));
         // Plugin.Logger.LogDebug($"dummy: {dummies}");
         return $"Only quest: {id}";
     }
@@ -67,7 +70,7 @@ public static class Console
     {
         var current = EClass.sources.quests.map;
         s_backup = current
-            .Where(pair => pair.Value.group == "random")
+            .Where(pair => pair.Value.group == GrpRandom)
             .ToDictionary(pair => pair.Key, pair => pair.Value.group)
             .DeepCopy();
         // var backuped = string.Join(", ", s_backup.Select(pair => pair.Key));
