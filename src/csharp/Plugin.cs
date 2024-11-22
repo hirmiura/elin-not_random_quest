@@ -12,7 +12,7 @@ public static class MyPluginInfo
 {
     public const string PLUGIN_GUID = "yararezon.not_random_quest";
     public const string PLUGIN_NAME = "Not Random Quest";
-    public const string PLUGIN_VERSION = "0.1.3";
+    public const string PLUGIN_VERSION = "0.1.4";
 }
 
 
@@ -60,7 +60,6 @@ public static class GamePatch
         }
         else
         {
-            Console.HasReset = true;  // ロード後はリセットフラグを立てる
             Console.NRQSet(id);  // 再設定
         }
 

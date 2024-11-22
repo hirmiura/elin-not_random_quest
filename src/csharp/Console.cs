@@ -2,6 +2,7 @@
 // Copyright 2024 hirmiura (https://github.com/hirmiura)
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ReflexCLI.Attributes;
 
 namespace NotRandomQuest;
@@ -9,68 +10,64 @@ namespace NotRandomQuest;
 [ConsoleCommandClassCustomizer("")]
 public static class Console
 {
-    public static bool HasReset = true;
-
-    // id, group
-    private static Dictionary<string, string> s_backup = [];
-
-    [ConsoleCommand("")]
-    public static string NRQReset()
-    {
-        if (HasReset)
-        {
-            Plugin.Logger.LogDebug("NRQReset: Did nothing.");
-            return "Did nothing because of don't need recovery.";
-        }
-        else
-        {
-            var current = EClass.sources.quests.map;
-            s_backup.ToList().ForEach(pair => current[pair.Key].group = pair.Value);
-            Plugin.ConfigId.Value = "";
-            HasReset = true;
-            Plugin.Logger.LogDebug($"NRQReset: Resore default.");
-            return "Restore default.";
-        }
-    }
+    public static readonly string GrpRandom = "random";
+    public static readonly string GrpDummy = "dummy";
 
     [ConsoleCommand("")]
     public static string NRQSet(string id)
     {
-        var current = EClass.sources.quests.map;
-        if (!current.ContainsKey(id))
+        var quest_source = _GetRowsByGroup([GrpRandom, GrpDummy]);
+        var idlist = quest_source.Select(row => row.id);
+        if (!idlist.Contains(id))
         {
-            Plugin.Logger.LogDebug($"NRQSet: {id} not Found.");
-            return $"{id} not Found.";
+            var msg = $"{id} not Found.";
+            Plugin.Logger.LogDebug($"NRQSet: {msg}");
+            return msg;
         }
-        if (HasReset)
-        {
-            Backup();
-        }
-        else
-        {
-            NRQReset();
-        }
-        HasReset = false;
-        current.Where(pair => pair.Key != id && pair.Value.group == "random")
-            .Select(pair => pair.Key).ToList()
-            .ForEach(key => current[key].group = "dummy");
-        Plugin.ConfigId.Value = id;
-        Plugin.Logger.LogDebug($"NRQSet: {id} set.");
-        // var dummies = string.Join(", ", current.Where(pair => pair.Value.group == "dummy").Select(pair => pair.Key));
-        // Plugin.Logger.LogDebug($"dummy: {dummies}");
+        SetGroup([id]);
+        Plugin.ConfigId.Value = id;  // 設定を保存
+        Plugin.Logger.LogDebug($"NRQSet: \"{id}\" set.");
         return $"Only quest: {id}";
     }
 
-    public static void Backup()
+    [ConsoleCommand("")]
+    public static string NRQReset()
     {
-        var current = EClass.sources.quests.map;
-        s_backup = current
-            .Where(pair => pair.Value.group == "random")
-            .ToDictionary(pair => pair.Key, pair => pair.Value.group)
-            .DeepCopy();
-        // var backuped = string.Join(", ", s_backup.Select(pair => pair.Key));
-        // Plugin.Logger.LogDebug($"backuped: {backuped}");
-        Plugin.Logger.LogDebug($"Backup: Save values.");
+        RestoreGroup();
+        Plugin.ConfigId.Value = "";  // 設定を更新
+        var msg = "Restore default.";
+        Plugin.Logger.LogDebug($"NRQReset: {msg}");
+        return msg;
+    }
+
+    public static void SetGroup(IEnumerable<string> target_ids)
+    {
+        var quest_source = _GetRowsByGroup([GrpRandom, GrpDummy]);
+        foreach (var row in quest_source)
+        {
+            var grp = target_ids.Contains(row.id) ? GrpRandom : GrpDummy;
+            _SetGroupToRow(row, grp);
+        }
+    }
+
+    public static void RestoreGroup()
+    {
+        var quest_source = _GetRowsByGroup([GrpDummy]);
+        foreach (var row in quest_source)
+        {
+            _SetGroupToRow(row, GrpRandom);
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static IEnumerable<SourceQuest.Row> _GetRowsByGroup(IEnumerable<string> groups) =>
+        EClass.sources.quests.rows.Where(r => groups.Contains(r.group));
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void _SetGroupToRow(SourceQuest.Row row, string group)
+    {
+        row.group = group;
+        Plugin.Logger.LogDebug($"\"{row.id}\".group = {group}");
     }
 
     [ConsoleCommand("")]
