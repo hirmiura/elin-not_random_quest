@@ -67,7 +67,7 @@ public static class Console
     private static void _SetGroupToRow(SourceQuest.Row row, string group)
     {
         row.group = group;
-        Plugin.Logger.LogDebug($"\"{row.id}\".group = {GrpRandom}");
+        Plugin.Logger.LogDebug($"\"{row.id}\".group = {group}");
     }
 
     [ConsoleCommand("")]
