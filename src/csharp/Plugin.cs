@@ -60,7 +60,6 @@ public static class GamePatch
         }
         else
         {
-            Console.HasReset = true;  // ロード後はリセットフラグを立てる
             Console.NRQSet(id);  // 再設定
         }
 
