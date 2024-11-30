@@ -4,7 +4,7 @@
     <id>not_random_quest</id>
     <author>Yararezon</author>
     <loadPriority>100</loadPriority>
-    <version>0.23.34-0.1.4</version>
+    <version>0.23.34-0.1.5</version>
     <description>[h1]Not Random Quest[/h1]
 
         ランダムクエストで特定のクエストだけが出るようにするコンソールコマンドを追加します。
@@ -14,7 +14,7 @@
         [list]
         [*] [code]NRQSet [u]id[/u][/code]
         [u]id[/u] のクエストだけにします。
-        [u]id[/u] は Source Extractor の quests.csv を見るなどしてください。
+        [u]id[/u] は [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3361605227]Source Extractor[/url] の quests.csv を見るなどしてください。
         例: NRQSet [u]escort[/u]
 
         [*] [code]NRQReset[/code]
@@ -51,6 +51,8 @@
         [h2]変更履歴[/h2]
 
         [list]
+        [*] 0.1.5
+        設定ファイルから行き先ゾーンを読み込む際のチェックを修正した
         [*] 0.1.4
         ランダムクエスト以外も設定できてしまっていたのを修正した
         [*] 0.1.3

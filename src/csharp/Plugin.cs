@@ -12,7 +12,7 @@ public static class MyPluginInfo
 {
     public const string PLUGIN_GUID = "yararezon.not_random_quest";
     public const string PLUGIN_NAME = "Not Random Quest";
-    public const string PLUGIN_VERSION = "0.1.4";
+    public const string PLUGIN_VERSION = "0.1.5";
 }
 
 
@@ -65,7 +65,7 @@ public static class GamePatch
 
         // destZone の設定
         var destination = Plugin.ConfigDestZone.Value;
-        if (id.IsNullOrWhiteSpace())
+        if (destination.IsNullOrWhiteSpace())
         {
             Plugin.Logger.LogDebug($"GamePatch.Postfix: destZone not set.");
         }
