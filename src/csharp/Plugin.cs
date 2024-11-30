@@ -65,7 +65,7 @@ public static class GamePatch
 
         // destZone の設定
         var destination = Plugin.ConfigDestZone.Value;
-        if (id.IsNullOrWhiteSpace())
+        if (destination.IsNullOrWhiteSpace())
         {
             Plugin.Logger.LogDebug($"GamePatch.Postfix: destZone not set.");
         }
